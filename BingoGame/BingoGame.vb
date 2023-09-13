@@ -1,14 +1,14 @@
 ﻿'Zachary Christensen
 'RCET 2265
 'Fall 2023
-'{Project Name}
-'https://github.com/Minidude140
+'Bingo Game
+'https://github.com/Minidude140/BingoGame.git
 
 
 Option Explicit On
 Option Strict On
 
-Module Module1
+Module BingoGame
 
     Sub Main()
 
