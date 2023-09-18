@@ -27,6 +27,9 @@ Module BingoGame
 
         Dim bingoCage(4, 14) As Boolean
 
+        'bingoCage(2, 5) = True
+        'bingoCage(4, 10) = True
+        'bingoCage(4, 7) = True
         DisplayDraws(bingoCage)
         Console.Read()
     End Sub
@@ -46,7 +49,11 @@ Module BingoGame
         For number = ballCage.GetLowerBound(1) To ballCage.GetUpperBound(1)
             For letter = ballCage.GetLowerBound(0) To ballCage.GetUpperBound(0)
                 ' Console.Write((letter * 15) + (number + 1))
-                currentBall = CStr((letter * 15) + (number + 1) & " |")
+                If ballCage(letter, number) Then
+                    currentBall = CStr((letter * 15) + (number + 1) & " |")
+                Else
+                    currentBall = "  |"
+                End If
                 Console.Write(currentBall.PadLeft(5))
             Next
             Console.WriteLine()
