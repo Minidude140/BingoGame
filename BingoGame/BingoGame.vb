@@ -14,8 +14,8 @@ Module BingoGame
     '[~]Create an array to track the numbers called
     '[~]create a function to display the balls already called
     '[~]create a way to draw a ball, check if it has been called, and track it in...
-    '[]create a way to restart the game.  Should happen automatically if all balls are called
-    '[]new game, play again, or quit functionality
+    '[~]create a way to restart the game.  Should happen automatically if all balls are called
+    '[~]new game, play again, or quit functionality
     '[]generate player cards and make playable
     '[]create a way to display the bingo card
 
@@ -26,22 +26,25 @@ Module BingoGame
         'ball number = (letter index * 15) + (number index + 1)
 
         Dim bingoCage(4, 14) As Boolean
-        Dim exitFlag As Boolean = False
         Dim userInput As String
 
+        SetDefaultPrompt()
+        Do Until userInput = "Q" Or userInput = "q"
+            DisplayDraws(bingoCage)
 
-        Do Until exitFlag = True
             userInput = Console.ReadLine()
+            Select Case userInput
+                Case "q", "Q"
+                    Exit Do
+                Case "n", "N"
+                    ReDim bingoCage(4, 14)
+                Case Else
+                    DrawBall(bingoCage)
+            End Select
 
-            If userInput = "Q" Or userInput = "q" Then
-                exitFlag = True
-            Else
-                DrawBall(bingoCage)
-                DisplayDraws(bingoCage)
-            End If
 
         Loop
-        Console.Read()
+        'Console.Read()
 
 
     End Sub
@@ -72,6 +75,7 @@ Module BingoGame
             Console.WriteLine()
         Next
         Console.WriteLine(StrDup(25, "-"))
+        Console.WriteLine(UserMessage())
     End Sub
 
     Sub DrawBall(ByRef bingoCage(,) As Boolean)
@@ -90,4 +94,20 @@ Module BingoGame
         Return CInt(Rnd() * max)
     End Function
 
+    Function UserMessage(Optional message As String = " ", Optional clear As Boolean = False) As String
+        Static messages As String
+        If clear Then
+            messages = " "
+        ElseIf message <> " " Then
+            messages &= message & vbLf
+        End If
+        Return messages
+    End Function
+
+    Sub SetDefaultPrompt()
+        UserMessage(, True)
+        UserMessage("Press Enter to draw a ball.")
+        UserMessage("Enter 'n' to restart game.")
+        UserMessage("Enter 'q' to quit")
+    End Sub
 End Module
