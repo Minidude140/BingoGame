@@ -31,6 +31,7 @@ Module BingoGame
         SetDefaultPrompt()
         Do Until userInput = "Q" Or userInput = "q"
             DisplayDraws(bingoCage)
+            SetDefaultPrompt()
 
             userInput = Console.ReadLine()
             Select Case userInput
@@ -81,12 +82,17 @@ Module BingoGame
     Sub DrawBall(ByRef bingoCage(,) As Boolean)
         Dim letter As Integer
         Dim number As Integer
+        Dim numberOfTries As Integer
+        Dim _letter = New String() {"B", "I", "N", "G", "O"}
+        'need logic for when all balls are called
 
         Do
             letter = RandomNumber(4)
             number = RandomNumber(14)
+            numberOfTries += 1
         Loop Until bingoCage(letter, number) = False
         bingoCage(letter, number) = True
+        UserMessage($"Drew {_letter(letter)} {number + 1} in {numberOfTries} tries.")
     End Sub
 
     Function RandomNumber(max As Integer) As Integer
@@ -108,6 +114,6 @@ Module BingoGame
         UserMessage(, True)
         UserMessage("Press Enter to draw a ball.")
         UserMessage("Enter 'n' to restart game.")
-        UserMessage("Enter 'q' to quit")
+        UserMessage("Enter 'q' to quit.")
     End Sub
 End Module
