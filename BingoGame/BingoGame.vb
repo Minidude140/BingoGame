@@ -29,6 +29,7 @@ Module BingoGame
         Dim userInput As String
 
         SetDefaultPrompt()
+        BallCount(True)
         Do Until userInput = "Q" Or userInput = "q"
             DisplayDraws(bingoCage)
             SetDefaultPrompt()
@@ -88,7 +89,7 @@ Module BingoGame
         'need logic for when all balls are called
 
 
-        If BallCount() <= 75 Then
+        If BallCount() < 75 Then
             Do
                 letter = RandomNumber(4)
                 number = RandomNumber(14)
@@ -96,7 +97,18 @@ Module BingoGame
             Loop Until bingoCage(letter, number) = False
             bingoCage(letter, number) = True
             UserMessage($"Drew {_letter(letter)} {number + 1} in {numberOfTries} tries.")
+        ElseIf BallCount() = 76 Then
+            Do
+                letter = RandomNumber(4)
+                number = RandomNumber(14)
+                numberOfTries += 1
+            Loop Until bingoCage(letter, number) = False
+            bingoCage(letter, number) = True
+            UserMessage($"Drew {_letter(letter)} {number + 1} in {numberOfTries} tries.")
+            UserMessage("All balls have been called, please start a new game.")
         Else
+
+            SetDefaultPrompt()
             UserMessage("ALL balls have been called, please start a new game.")
 
         End If
@@ -111,8 +123,8 @@ Module BingoGame
     Function UserMessage(Optional message As String = " ", Optional clear As Boolean = False) As String
         Static messages As String
         If clear Then
-            messages = " "
-        ElseIf message <> " " Then
+            messages = ""
+        ElseIf message <> "" Then
             messages &= message & vbLf
         End If
         Return messages
