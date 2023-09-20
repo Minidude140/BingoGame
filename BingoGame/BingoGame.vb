@@ -86,9 +86,8 @@ Module BingoGame
         Dim number As Integer
         Dim numberOfTries As Integer
         Dim _letter = New String() {"B", "I", "N", "G", "O"}
-        'need logic for when all balls are called
 
-
+        'if less than the last ball keep drawing
         If BallCount() < 75 Then
             Do
                 letter = RandomNumber(4)
@@ -97,6 +96,7 @@ Module BingoGame
             Loop Until bingoCage(letter, number) = False
             bingoCage(letter, number) = True
             UserMessage($"Drew {_letter(letter)} {number + 1} in {numberOfTries} tries.")
+            'if the last ball drawn once more and tell user the last ball has been drawn
         ElseIf BallCount() = 76 Then
             Do
                 letter = RandomNumber(4)
@@ -106,11 +106,10 @@ Module BingoGame
             bingoCage(letter, number) = True
             UserMessage($"Drew {_letter(letter)} {number + 1} in {numberOfTries} tries.")
             UserMessage("All balls have been called, please start a new game.")
+            'All ball already drawn report to user
         Else
-
             SetDefaultPrompt()
             UserMessage("ALL balls have been called, please start a new game.")
-
         End If
 
     End Sub
