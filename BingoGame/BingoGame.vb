@@ -39,6 +39,7 @@ Module BingoGame
                     Exit Do
                 Case "n", "N"
                     ReDim bingoCage(4, 14)
+                    BallCount(True)
                 Case Else
                     DrawBall(bingoCage)
             End Select
@@ -86,13 +87,20 @@ Module BingoGame
         Dim _letter = New String() {"B", "I", "N", "G", "O"}
         'need logic for when all balls are called
 
-        Do
-            letter = RandomNumber(4)
-            number = RandomNumber(14)
-            numberOfTries += 1
-        Loop Until bingoCage(letter, number) = False
-        bingoCage(letter, number) = True
-        UserMessage($"Drew {_letter(letter)} {number + 1} in {numberOfTries} tries.")
+
+        If BallCount() <= 75 Then
+            Do
+                letter = RandomNumber(4)
+                number = RandomNumber(14)
+                numberOfTries += 1
+            Loop Until bingoCage(letter, number) = False
+            bingoCage(letter, number) = True
+            UserMessage($"Drew {_letter(letter)} {number + 1} in {numberOfTries} tries.")
+        Else
+            UserMessage("ALL balls have been called, please start a new game.")
+
+        End If
+
     End Sub
 
     Function RandomNumber(max As Integer) As Integer
@@ -116,4 +124,14 @@ Module BingoGame
         UserMessage("Enter 'n' to restart game.")
         UserMessage("Enter 'q' to quit.")
     End Sub
+
+    Function BallCount(Optional reset As Boolean = False) As Integer
+        Static count As Integer
+        count += 1
+        If reset Then
+            count = 0
+        End If
+        Console.WriteLine(count)
+        Return count
+    End Function
 End Module
